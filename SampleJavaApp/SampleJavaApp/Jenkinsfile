@@ -14,7 +14,7 @@ pipeline {
  stages {
         stage('Build') {
             steps {
-                sh "${MVN_HOME}/bin/ mvn clean compile"
+                sh "${MVN_HOME}/bin/ mvn compile"
             }
         }
 
