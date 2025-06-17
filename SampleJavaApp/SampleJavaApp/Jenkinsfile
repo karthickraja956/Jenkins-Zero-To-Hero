@@ -2,19 +2,19 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven 3.8.1' // Adjust based on your Jenkins Maven installation name
-        jdk 'Java 8'        // Adjust based on your Jenkins JDK installation name
+        maven 'Maven 3.8.7' // Adjust based on your Jenkins Maven installation name
+        jdk 'Java 17'        // Adjust based on your Jenkins JDK installation name
     }
 
     environment {
-        MVN_HOME = tool 'Maven 3.8.1'
+        MVN_HOME = tool 'Maven 3.8.7'
     }
 
    
  stages {
         stage('Build') {
             steps {
-                sh "${MVN_HOME}/bin/mvn clean compile"
+                sh "${MVN_HOME}/bin/ mvn clean compile"
             }
         }
 
