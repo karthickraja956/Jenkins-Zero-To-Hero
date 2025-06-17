@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven 3.8.1' // Adjust based on your Jenkins Maven installation name
+        jdk 'Java 8'        // Adjust based on your Jenkins JDK installation name
+    }
+
+    environment {
+        MVN_HOME = tool 'Maven 3.8.1'
+    }
+
+   
+
+        stage('Build') {
+            steps {
+                sh "${MVN_HOME}/bin/mvn clean compile"
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh "${MVN_HOME}/bin/mvn test"
+            }
+        }
+
+        stage('Package') {
+            steps {
+                sh "${MVN_HOME}/bin/mvn package"
+            }
+        }
+
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            }
+        }
+    }
+
+    post {
+        always {
+            junit '**/target/surefire-reports/*.xml'
+        }
+        failure {
+            echo 'Build failed!'
+        }
+        success {
+            echo 'Build succeeded!'
+        }
+    }
+}
