@@ -7,7 +7,7 @@ pipeline {
         docker { image 'maven:3.8.1-adoptopenjdk-11' }
       }
       steps {
-        dir('multi-stage-multi-agent/pom.xml') { // Change 'backend' to the actual folder containing pom.xml
+        dir('multi-stage-multi-agent') { // Change 'backend' to the actual folder containing pom.xml
           sh 'mvn clean'
           sh 'mvn compile'
           sh 'mvn install'
