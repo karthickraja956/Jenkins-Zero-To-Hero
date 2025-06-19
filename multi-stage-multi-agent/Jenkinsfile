@@ -7,7 +7,7 @@ pipeline {
         docker { image 'maven:3.8.1-adoptopenjdk-11' }
       }
       steps {
-        dir('multi-stage-multi-agent') { // Change 'backend' to the actual folder containing pom.xml
+        dir('multi-stage-multi-agent') {
           sh 'mvn clean'
           sh 'mvn compile'
           sh 'mvn install'
@@ -16,11 +16,14 @@ pipeline {
     }
 
     stage('Front-end') {
+      when {
+        expression { fileExists('frontend/package.json') }
+      }
       agent {
         docker { image 'node:16-alpine' }
       }
       steps {
-        dir('frontend') { // Change 'frontend' to the actual folder containing package.json
+        dir('frontend') {
           sh 'node --version'
           sh 'npm install'
           sh 'npm run build'
